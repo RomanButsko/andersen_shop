@@ -1,5 +1,5 @@
 /* Сюда можно добавить какие-либо ошибки и посмотреть результат, с сервера они просто не приходят */
-export const errorsProducts: string[] =[] 
+export const errorsProducts: string[] = []
 
 export const ProductService = {
     async getProducts() {

@@ -23,11 +23,12 @@ export const Login: FC<ILogin> = ({ setLogin }) => {
 
     useEffect(() => {
         if (!isShow) setLogin(false)
-    }, [isShow])
+    }, [isShow, setLogin])
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        if (!email || !password) return setError('Пожалуйста, заполните все поля')
+        if (!email || !password)
+            return setError('Пожалуйста, заполните все поля')
         if (email === 'admin@gmail.com' && password === 'admin') {
             changeLoginStatus(true)
             setIsShow(false)

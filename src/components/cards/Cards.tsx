@@ -19,7 +19,7 @@ export const Cards = () => {
             setLoading(false)
         }
         fetchProducts()
-    }, [])
+    }, [getProducts])
 
     const handleTiteClick = (productId: number) =>
         navigate(`product/${productId}`)

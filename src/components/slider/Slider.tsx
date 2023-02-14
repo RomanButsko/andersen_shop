@@ -32,7 +32,7 @@ export const Slider: FC<ISlider> = ({
                 <img
                     src={image}
                     key={index}
-                    alt={`photo ${index}`}
+                    alt={''}
                     className={style.image}
                     style={{
                         display: selectedImage

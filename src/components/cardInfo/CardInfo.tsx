@@ -55,7 +55,7 @@ export const CardInfo = () => {
                                 <img
                                     src={image}
                                     key={index}
-                                    alt={`photo ${index}`}
+                                    alt={''}
                                     onClick={() => setSelectedImage(index)}
                                 />
                             ))}
