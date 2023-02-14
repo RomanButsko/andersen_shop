@@ -1,0 +1,41 @@
+.shadow
+    width: 100vw
+    height: 100vh
+    background-color: #c9c9c9
+    opacity: 0.4
+    position: fixed
+    top: 0
+    left: 0
+.container
+    width: 400px
+    height: 400px
+    position: fixed
+    top: 50%
+    left: 50%
+    z-index: 3
+    opacity: 1
+    transform: translateY(-50%) translateX(-50%)
+    transition: all 0.2s ease-in-out
+    &_wrapper
+        padding: 20px
+        text-align: center
+        background: #fff
+        border-radius: 14px
+        &__title
+            margin-top: 0
+            color: #333
+        &__close
+            position: absolute
+            top: 3%
+            right: 30px
+            transition: all 200ms
+            font-size: 30px
+            font-weight: bold
+            text-decoration: none
+            color: #333
+            &:hover
+                cursor: pointer
+                color: #000
+        &__content
+            max-height: 30%
+            overflow: auto

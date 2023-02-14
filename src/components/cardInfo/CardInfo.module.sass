@@ -1,0 +1,64 @@
+.container
+    display: grid
+    grid-template-columns: 1.4fr 1.2fr
+    grid-template-rows: 1.5fr 1.8fr
+    gap: 0px 0px
+    padding: 3% 3% 0 3%
+    &_loading
+        width: 10%
+        position: absolute
+        text-align: center
+        left: 50%
+        top: 50%
+        transform: translate(-50%, -50%)
+        img
+            width: 100%
+            height: 100%
+            object-fit: contain
+    &_photos
+        position: relative
+        &__main
+        width: 70%
+        margin: 0 auto
+        &__list
+            display: flex
+            flex-direction: row
+            gap: 2%
+            img
+                width: 30%
+                margin-top: 2%
+                height: auto
+                cursor: pointer
+    &_right
+        display: flex
+        flex-direction: column
+        justify-content: space-around
+        &__header
+            display: flex
+            flex-direction: column
+        &__descr
+            display: flex
+            flex-direction: column
+            p
+                font-size: 19px
+        &__price
+            height: 10%
+            display: flex
+            flex-direction: row
+            align-items: baseline
+            justify-content: space-around
+            &__cost
+                font-weight: 700
+                font-size: 1.5em
+            &__buy
+                height: 100%
+    &_back
+        margin-bottom: 4%
+        border: 1px dashed black
+        background: #ffff
+        font-size: 14px
+        font-weight: 700
+        border-radius: 17px
+        width: 18%
+        height: 5%
+        cursor: pointer
