@@ -1,25 +1,43 @@
 import { ChangeEvent, FC, useState } from 'react'
-import { useCardContext, useLoginContext } from '../../hooks/useContext'
-import { ICardBuy } from './cardBuy.interface'
+
+import { useCartActions } from '../../hooks/useDispatch'
+import { useAppSelector } from '../../hooks/useSelector'
+import { productService } from '../../services/ProductCards'
+import { selectLogin } from '../../store/login/loginSlice'
+import { IProduct } from '../../types/products'
+import { Button } from '../../ui/button/Button'
 import style from './CardBuy.module.sass'
+import { ICardBuy } from './cardBuy.interface'
 
-export const CardBuy: FC<ICardBuy> = ({ productId, cost }) => {
-    const [countProducts, setCountProducts] = useState<number>(1)
+export const CardBuy: FC<ICardBuy> = ({ productsId, cost }) => {
+    const [countProduct, setCountProduct] = useState<number>(1)
 
-    const { addProduct } = useCardContext()
-    const { isLoggedIn } = useLoginContext()
+    const { isLoggedIn } = useAppSelector(selectLogin)
+    const { addProductDispatch } = useCartActions()
 
-    const handleAddProduct = () =>
-        addProduct(productId, cost * countProducts, countProducts)
+    const handleInputChange = (e: ChangeEvent<HTMLInputElement>): void => {
+        const value = e.target.value
+        if (/^\d*$/.test(value)) {
+            setCountProduct(+value)
+        }
+    }
 
-    const handleInputChange = (e: ChangeEvent<HTMLInputElement>) =>
-        setCountProducts(+e.target.value)
+    const handleCountPlus = (): void => setCountProduct(countProduct + 1)
 
-    const handleCountPlus = () => setCountProducts(countProducts + 1)
+    const handleCountMinus = (): void => {
+        if (countProduct === 0) return
+        setCountProduct(countProduct - 1)
+    }
 
-    const handleCountMinus = () => {
-        if (countProducts === 0) return
-        setCountProducts(countProducts - 1)
+    const handleAddProduct = async () => {
+        const exactProduct: IProduct = await productService.getExactProduct(
+            productsId
+        )
+        addProductDispatch({
+            products: { ...exactProduct, count: countProduct },
+            totalCost: cost * countProduct,
+            countProduct,
+        })
     }
 
     return (
@@ -27,26 +45,32 @@ export const CardBuy: FC<ICardBuy> = ({ productId, cost }) => {
             {isLoggedIn ? (
                 <>
                     <div className={style.container_count}>
-                        <button onClick={handleCountPlus}>+</button>
+                        <button
+                            className={style.btns}
+                            onClick={handleCountPlus}
+                        >
+                            +
+                        </button>
                         <input
-                            value={countProducts}
+                            value={countProduct}
                             onChange={handleInputChange}
                             style={{
                                 width: `${
-                                    (String(countProducts).length + 1) * 8
+                                    (String(countProduct).length + 1) * 8
                                 }px`,
                                 textAlign: 'center',
                             }}
                         />
-                        <button onClick={handleCountMinus}>-</button>
+                        <button
+                            className={style.btns}
+                            onClick={handleCountMinus}
+                        >
+                            -
+                        </button>
                     </div>
-
-                    <button
-                        onClick={handleAddProduct}
-                        className={style.container_btn}
-                    >
+                    <Button onClick={handleAddProduct}>
                         Добавить в корзину
-                    </button>
+                    </Button>
                 </>
             ) : (
                 <span className={style.container_refusal}>

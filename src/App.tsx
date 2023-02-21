@@ -1,14 +1,13 @@
+import { Provider } from 'react-redux'
 import { RouterProvider } from 'react-router-dom'
-import { CartProvider } from './hoc/CartProvider'
-import { LoginProvider } from './hoc/LoginProvider'
+
 import router from './router'
+import store from './store/store'
 
 export const App = () => {
     return (
-        <LoginProvider>
-            <CartProvider>
-                <RouterProvider router={router} />
-            </CartProvider>
-        </LoginProvider>
+        <Provider store={store}>
+            <RouterProvider router={router} />
+        </Provider>
     )
 }

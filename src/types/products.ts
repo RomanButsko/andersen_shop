@@ -1,16 +1,20 @@
 export interface IProduct {
     id: number
-    title: string
-    price: number
     description: string
-    category: Category
-    images: string[]
+    category: string
+    price: number
+    rating: Rate
+    title: string
+    image: string
 }
 
-interface Category {
-    id: number
-    name: string
-    image: string
+export interface IProductCart extends IProduct {
+    count: number
+}
+
+interface Rate {
+    count: number
+    rate: number
 }
 
 export interface IBin {
@@ -18,5 +22,4 @@ export interface IBin {
     totalCost: number
     productsId: number[]
     countProduct: number
-    // removeProduct: (id: number, cost: number) => void;
 }

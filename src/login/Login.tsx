@@ -1,18 +1,26 @@
-import { ChangeEvent, FC, FormEvent, useEffect, useState } from 'react'
+import {
+    ChangeEvent,
+    FC,
+    FormEvent,
+    KeyboardEvent,
+    useEffect,
+    useState,
+} from 'react'
 import { useNavigate } from 'react-router'
-import { useLoginContext } from '../hooks/useContext'
+
+import { useLoginActions } from '../hooks/useDispatch'
 import Portal from '../portal/Portal'
 import { Modal } from '../ui/modal/Modal'
 import { useOutside } from './../hooks/useOutside'
-import { ILogin } from './login.interface'
 import style from './Login.module.sass'
+import { ILogin } from './login.interface'
 
 export const Login: FC<ILogin> = ({ setLogin }) => {
     const [email, setEmail] = useState<string>('')
     const [password, setPassword] = useState<string>('')
     const [error, setError] = useState<string>('')
     const navigate = useNavigate()
-    const { changeLoginStatus } = useLoginContext()
+    const { handleLoginStatus } = useLoginActions()
     const { ref, isShow, setIsShow } = useOutside(true)
 
     const handleEmailChange = (e: ChangeEvent<HTMLInputElement>) =>
@@ -30,10 +38,16 @@ export const Login: FC<ILogin> = ({ setLogin }) => {
         if (!email || !password)
             return setError('Пожалуйста, заполните все поля')
         if (email === 'admin@gmail.com' && password === 'admin') {
-            changeLoginStatus(true)
+            handleLoginStatus(true)
             setIsShow(false)
             navigate('/')
         } else setError('Введенные данные не совпадают')
+    }
+
+    const handleKeyPress = (event: KeyboardEvent<HTMLFormElement>) => {
+        if (event.key === 'Enter') {
+            handleSubmit(event)
+        }
     }
 
     return (
@@ -46,7 +60,11 @@ export const Login: FC<ILogin> = ({ setLogin }) => {
                         show={isShow}
                         onClose={setIsShow}
                     >
-                        <form className={style.form} onSubmit={handleSubmit}>
+                        <form
+                            className={style.form}
+                            onSubmit={handleSubmit}
+                            onKeyDown={handleKeyPress}
+                        >
                             <div className={style.form_field}>
                                 <label htmlFor="email">
                                     Введите Вашу{' '}

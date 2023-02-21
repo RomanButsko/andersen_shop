@@ -1,6 +1,7 @@
-import { FC, forwardRef, PropsWithChildren } from 'react'
-import { IModal } from './modal.interface'
+import { FC, PropsWithChildren, forwardRef } from 'react'
+
 import style from './Modal.module.sass'
+import { IModal } from './modal.interface'
 
 export const Modal: FC<PropsWithChildren & IModal> = forwardRef(
     ({ title, onClose, children, show }, ref: any) => {

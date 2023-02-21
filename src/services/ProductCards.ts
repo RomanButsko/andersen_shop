@@ -1,24 +1,25 @@
-/* Сюда можно добавить какие-либо ошибки и посмотреть результат, с сервера они просто не приходят */
-export const errorsProducts: string[] = []
+export let errorsProducts: string[] = []
 
-export const ProductService = {
+export const productService = {
     async getProducts() {
         try {
             const response = await fetch(
-                'https://api.escuelajs.co/api/v1/products'
-            )
-            return response.json()
+                'https://fakestoreapi.com/products'
+            ).then((res) => res.json())
+            return response
         } catch (error: any) {
+            if (errorsProducts.length) errorsProducts = []
             errorsProducts.push(error.message)
         }
     },
     async getExactProduct(productId: number) {
         try {
             const response = await fetch(
-                `https://api.escuelajs.co/api/v1/products/${productId}`
-            )
-            return response.json()
+                `https://fakestoreapi.com/products/${productId}`
+            ).then((res) => res.json())
+            return response
         } catch (error: any) {
+            if (errorsProducts.length) errorsProducts = []
             errorsProducts.push(error.message)
         }
     },

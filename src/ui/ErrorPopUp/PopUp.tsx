@@ -1,5 +1,6 @@
-import style from './PopUp.module.sass'
 import { FC, useState } from 'react'
+
+import style from './PopUp.module.sass'
 
 export const PopUp: FC<{ message: string }> = ({ message }) => {
     const [show, setShow] = useState<boolean>(true)

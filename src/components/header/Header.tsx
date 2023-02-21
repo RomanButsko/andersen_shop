@@ -1,25 +1,29 @@
+import { useEffect, useState } from 'react'
+import { NavLink } from 'react-router-dom'
+import { Link } from 'react-router-dom'
+
+import { useLoginActions } from '../../hooks/useDispatch'
+import { useAppSelector } from '../../hooks/useSelector'
+import { Login } from '../../login/Login'
+import { selectLogin } from '../../store/login/loginSlice'
+import { Cart } from '../cart/Cart'
+import exit from './../../assets/exit.svg'
+import logo from './../../assets/headlogo.jpeg'
+import signin from './../../assets/signin.svg'
 import style from './Header.module.sass'
 import { navItems } from './navItems'
-import logo from './../../assets/headlogo.jpeg'
-import { NavLink } from 'react-router-dom'
-import { Cart } from '../cart/Cart'
-import { useLoginContext } from '../../hooks/useContext'
-import signin from './../../assets/signin.svg'
-import exit from './../../assets/exit.svg'
-import { Login } from '../../login/Login'
-import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
 
 export const Header = () => {
     const [login, setLogin] = useState<boolean>(false)
-    const { isLoggedIn, changeLoginStatus } = useLoginContext()
+    const { isLoggedIn } = useAppSelector(selectLogin)
+    const { handleLoginStatus } = useLoginActions()
 
     useEffect(() => {
         setLogin(false)
     }, [])
 
     const handleLogOut = () => {
-        changeLoginStatus(false)
+        handleLoginStatus(false)
         setLogin(false)
     }
 

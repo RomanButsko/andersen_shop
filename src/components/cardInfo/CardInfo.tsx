@@ -1,23 +1,23 @@
 import { useEffect, useState } from 'react'
-import { useNavigate, useParams } from 'react-router'
-import { ProductService } from '../../services/ProductCards'
+import { useNavigate, useParams } from 'react-router-dom'
+
+import { productService } from '../../services/ProductCards'
 import { IProduct } from '../../types/products'
 import { CardBuy } from '../cardBuy/CardBuy'
-import { Slider } from '../slider/Slider'
 import spinner from './../../assets/Spinner.gif'
 import style from './CardInfo.module.sass'
 
 export const CardInfo = () => {
-    const [products, setProducts] = useState<IProduct>()
-    const [selectedImage, setSelectedImage] = useState<number>(0)
+    const [products, setProducts] = useState<IProduct | null>(null)
     const [loading, setLoading] = useState<boolean>(true)
     const navigate = useNavigate()
-    const { id } = useParams()
+    const { id } = useParams<{ id: string }>()
 
     useEffect(() => {
         if (!id) return
         const fetchData = async () => {
-            const response = await ProductService.getExactProduct(+id)
+            const response = await productService.getExactProduct(+id)
+            if (!response) return navigate('*')
             setProducts(response)
             setLoading(false)
         }
@@ -45,26 +45,16 @@ export const CardInfo = () => {
                         >
                             Назад
                         </button>
-                        <Slider
-                            images={products.images}
-                            setSelectedImage={setSelectedImage}
-                            selectedImage={selectedImage}
+                        <img
+                            src={products.image}
+                            alt="productImg"
+                            className={style.container_img}
                         />
-                        <div className={style.container_photos__list}>
-                            {products.images.map((image, index) => (
-                                <img
-                                    src={image}
-                                    key={index}
-                                    alt={''}
-                                    onClick={() => setSelectedImage(index)}
-                                />
-                            ))}
-                        </div>
                     </div>
                     <div className={style.container_right}>
                         <div className={style.container_right__header}>
                             <h1>{products.title}</h1>
-                            <span>{products.category.name}</span>
+                            <span>{products.category}</span>
                         </div>
                         <div className={style.container_right__descr}>
                             <i>Description:</i>
@@ -79,7 +69,7 @@ export const CardInfo = () => {
                             <div className={style.container_right__price__buy}>
                                 <CardBuy
                                     cost={products.price}
-                                    productId={products.id}
+                                    productsId={products.id}
                                 />
                             </div>
                         </div>

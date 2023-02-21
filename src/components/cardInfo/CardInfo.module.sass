@@ -1,7 +1,7 @@
 .container
     display: grid
     grid-template-columns: 1.4fr 1.2fr
-    grid-template-rows: 1.5fr 1.8fr
+    grid-template-rows: 1fr
     gap: 0px 0px
     padding: 3% 3% 0 3%
     &_loading
@@ -52,6 +52,10 @@
                 font-size: 1.5em
             &__buy
                 height: 100%
+    &_img
+        width: 100%
+        object-fit: contain
+        transition: 0.2s
     &_back
         margin-bottom: 4%
         border: 1px dashed black

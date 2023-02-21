@@ -1,5 +1,5 @@
-import style from './AboutUs.module.sass'
 import label from './../../assets/headlogo.jpeg'
+import style from './AboutUs.module.sass'
 
 export const AboutUs = () => {
     return (

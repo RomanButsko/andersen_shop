@@ -1,4 +1,4 @@
 export interface ICardBuy {
-    productId: number
+    productsId: number
     cost: number
 }
