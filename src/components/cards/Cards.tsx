@@ -1,25 +1,15 @@
-import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router'
+import { useProduct } from '../../hooks/useProduct'
 
 import { productService } from '../../services/ProductCards'
-import { IProduct } from '../../types/products'
 import { CardBuy } from '../cardBuy/CardBuy'
 import spinner from './../../assets/Spinner.gif'
 import style from './Cards.module.sass'
 
 export const Cards = () => {
-    const [products, setProducts] = useState<IProduct[]>([])
-    const [loading, setLoading] = useState<boolean>(true)
+    const { products, loading, setLoading, setProducts } = useProduct({})
     const navigate = useNavigate()
     const { getProducts } = productService
-    useEffect(() => {
-        const fetchProducts = async () => {
-            const products = await getProducts()
-            setProducts(products)
-            setLoading(false)
-        }
-        fetchProducts()
-    }, [])
 
     const handleGetProducts = async () => {
         const newProducts = await getProducts()
